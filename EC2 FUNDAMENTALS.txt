@@ -1,0 +1,137 @@
+
+	EC2 = virtual server = IaaS
+
+
+AWS BUDGET SETUP
+You need to be in root account to set up billing alert and give access to IAM user.
+
+goto account, scroll down to IAM user and role access to Billing information, ACTIVATE the permission for IAM user to access billings
+
+
+create budget helps you create a budget for your aws account in the billing console.
+
+
+
+EC2 BASICS
+operating system
+cpu
+memeory
+bootstrap = user data
+
+E2 USER DATA========= USED TO TO AUTOMATE BOOTSTRAP AT EC2 LAUNCH.
+
+
+Security Groups & Classic Ports Overview
+They are refers to as aws firewall 
+grant access to ports
+authorised IP ranges- IPv4 and IPv6
+control both inbound and outbound network
+
+SECURITY GROUPS GOOD TO KNOW
+- security group lives outside yoyr ec2
+- can be attached to multiple instances
+- maintain one security group for ssh
+- locked down to a region/vpc combination
+- if your application is not accessible then it is security group issue.
+- by default all inbound is blocked and all outbound authorised.
+
+CLASSIC PORTS TO KNOW
+22 - SSH
+21 - FTP
+22- SFTP
+80 - HTTP
+443- HTTPS
+3389 - RDP
+
+
+SSH
+RULE OF THUMB=== never connect to your aws with aws configure using your api keys (access key and secret key)
+instead use the IAM role for the instance.
+
+
+EC2 INSTANCE PURCHASING OPTIONS
+
+ON-DEMAND== Short workload, predictable pricing, pay by seconds
+reserved == long workload, covertible-reserved instance== long workload and flexible.
+ec2 savings plan
+
+RESERVED Instance
+up to 72% discount compared to on-demand
+reserve specific attributes (instance type, region, OS)
+You reserve period == 1YEAR (+dsicount), 3years (+++ discount)
+payment options = no-upfront (+), partial (++), all upfront (+++)
+reserve instance scope ==== regional or zonal (reserved capacity in AZ)
+recommeded for steady-state usage application (think database)
+you can buy and sell in marketplace if you dont need them anymore
+
+covertible-reserved instance ============ allows you to change your OS, scope, ec2 instance type and family. 66% discount.
+
+
+EC2 Savings  Plan
+72% discount
+locked to a specific instance family and types. not flexible
+
+
+
+EC2 SPOT INSTANCE
+90% discount
+most cost efficient instance in aws
+used for workload that are resilient to failure.
+not good for database
+you can only cancel a spot instance that are active. opened or disabled.
+In EC2 spot, you can specify your max billing, once the threshold is reached, the instance is stopped or interrupted.
+it is your duty to terminate the instance. before you terminate, delete the spot request; otherwise, the request will assume you need a new 
+instance after termination and will relaunch another one. 
+
+
+
+EC2 DEDICATED HOSTS======= Physical server dedicated to your host. most expensive
+
+EC2 DEDICATED INSTANCE ===== You have server inside your physical hardware
+not good for placement jobs.
+
+
+
+EC2 CAPACITY RESERVATION ===
+Reserve on-demand instances capacity in a specific AZ for a duration of time.
+you get charged for on-demand rate whether or not you use your instance
+
+
+
+
+SPOT FLEET
+Set of spot instances + (optional) on-demand instances
+spot fleet stops launching instance when max cost capacity is reached.
+can have multiple fleet so the pool can choose.
+
+STRATEGIES to allocate spot instances
+- low price : it will choose the pool with the low price (cost optimization. long workloads)
+- diversified: distributed accross all pools (great availability, long workloads)
+- capacity optimized
+- prize capacity optimized (recommended): pool with highest capacity available. then select pool with lower price.(best choice for workloads)
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

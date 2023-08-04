@@ -1,0 +1,168 @@
+
+EBS OVERVIEW
+-EBS are network drives attached to your instance while running.-
+-it allows data persistence even after instance termination.
+- can only be mounted to one instance at a time
+- they are bound to a specific AZ.
+-ANALOGY:Think of them as network USB stick
+- free tier: 30GB free EBS storage of type general purpose (SSD) or magnetic per month
+- it is a network drive. which means it is not a physical drive
+	: it used network interface to talk to the instance. so there might be a bit of latency
+- it can be detached from one instance and quickly attached to another
+- it is locked to an AZ
+- to move a volume to another AZ, you first need a SNAPSHOT.
+- have a provisioned capacity (GB or IOPS)
+
+
+====================================================
+
+
+EBS SNAPSHOT
+- Making a backup of your EBS volume at any point in time.
+- EBS SNAPHOT can span between different AZs and different regions.
+- move a snapshot to archive tier. 75% cheaper and takes about 24 - 72hours ro restore the archive
+- ensure you delete into recycle bin and set retention policy. incase of accidental deletion, snapshot can be recovered. 
+- specify retention (1day to 1year)
+-------- FAST SNAPSHOT RESTORE (FSR): It forces full utilization of snapshopt to have no latency for the first use. it costs money so becareful when using it.
+
+
+===========================================
+
+AMI OVERVIEW
+AMI= Amazon Machine Image
+AMI allows use you to customize your EC2 instance.
+PLS NOTE : AMI are built for a specific region. so you cannot use it in another region. 
+the only exception is that it can be copied accross regions. 
+EXAM QUESTION: ami is region based (attached to a region) 
+when you create an AMI, the content of the userdata is intact. when you use that same AMI to launch another instance, you dont need to write the userdata into it again
+except you want to modify the content for the fresh instance.
+	THIS MEANS USERDATA ARE EMBEDDED INTO THE AMI.
+
+
+===================================================
+
+
+
+EC2 INSTANCE STORE
+EBS volume are network drive with good but limited performance
+if you need a higher performance hardware disk, use EC2 instance store.
+better I/O performance
+they are EPHEMERAL storage and cannot be used as a durable long term storage option
+good for BUFFER/CACHE/SCRATCH DATA/TEMPORARY CONTENT.
+Risk of data lost if hardware fails
+
+=====================================================
+
+EBS VOLUME TYPES SUMMARY
+-	gp2/gp3 (SSD) = general purpose SSD volume that balances price and performance for a wide variety of workloads
+-	io1/io2 (SSD) = highest performance SSD volume for mission-critical low latency or high-throughput workloads.
+-	st1 (HDD) = low cost HDD volume designed for frequently accessed throughput intensive workloads
+-	SC1 (HDD) = low cost HDD volume designed for less frequently accessed workloads
+
+EBS volume are characterised in size, throughput and IOPS
+
+for EC2 instance, only gp2, gp3, io1 and io2 can be used as boot volume. 	HDD cannot be used as boot volume.
+
+EBS VOLUME TYPES USECASES
+
+GNERAL PURPOSE SSD:
+- cost effective storage
+-low latency
+- system boot volume, development and test environment
+- GiB = 16TiB
+
+-	GP3: Baseline of 3000 IOPS and throughput of 150MiB
+	can increase IOPS to 16000 IOPS and throughput to 1000 MiB/s independently
+-	GP2: can burst IOPS up to 3000 IOPS and throughput, max is 16000 IOPS.
+	3 IOPS PER GB. which means 5334 IOPS will give the max value. the IOPS are set together and are dependent on each other.
+
+PROVISIONED IOPS (PIOPS) SSD:
+- critical business application with high IOPS performance.
+- applications that needs more than 16000 IOPS
+- great for DATABASE worloads.
+- io1/.io2 - (4GiB - 16GTiB)
+	io2 max provisioned IOPS IS 64000 for nitro EC2 instances and 32000 for others.
+	io2 has sub-milliseconds latency
+	io2 storage can be increased independently.
+	io2 is more durable and has more IOPS. max 256,000 IOPS and 1000GiB/sec
+	io2 supports EBS multi-attach
+
+
+HARD DISK DRIVES (HDD)
+- cannot be a boot volume
+- 125GiB to 16TiB throughput.
+- throughput optimised HDD (st1)= big data, warehouse, log processing, max throughput  500MiB/s and IOPS  max = 500 IOPS
+- cold HDD (sc1)= for infrequently accessed data, low cost.
+
+
+
+====================================
+
+EBS MULTI-ATTACH io1/io2 FAMILY
+allows you to attach the same EBS volume to multuple instances in the same AZ.
+
+usecase:
+- higher application availabilty in clustered
+- applications that manage concurrent write operations
+- you cannot attach EBS volume from one AZ to another AZ.
+- maximum of 16 EC2 instances
+- must use a file system that is cluster-aware (NOT XFS, EXT4. ETC)
+
+=========================================================
+
+
+EBS ENCRYPTION.
+when you create an encrypted EBS volume, you get the following:
+- all data at rest are encrypted
+- all data in flight are encrypted
+- all snapshots encrypted
+- all volumes created from snapshots are encrypted.
+EBS encryption leverages keys from KMS (AES-256)
+
+HOW TO ENCRYPT AND DECRYPT
+-	create EBS snapshot
+- 	encrypt EBS snapshot (USING COPY)
+-	create new EBS from the snapshot (volume will also be encrypted)
+
+=================================================
+
+
+AMAZON ELASTIC FILE STORAGE (EFS)
+
+EFS is a managed network file system and can be mounted on EC2.
+EFS works with EC2 instance in multi AZ
+HIGHLY available, scalable, expensive (3xgp2), pay per use
+mutliple EC2 can share a single EFS attched to them.
+
+USECASE:
+webserver, wordpress, data sharing
+use security group to control access to EFS
+only compactible with linux based AMI (NOT WINDOWS)
+encryption at rest using KMS.
+POSIX file system (~Linux) that has a standard file API. POSIX = portable operating system interface.
+no capacity planning, pay per use, file systen scales automatically.
+elastic throughput. can scale your throughput up and down based on your workload.
+
+EFS STORAGE TIER:
+standard: frequently access file
+EFS-IA : for infrequently accessed file. lower price. this uses a lifecycle policy. 90% in cost savings.
+
+
+==========================================================================
+
+
+EFS VS EBS
+EBS
+one instance per time except in the case of multi attach io1/io2
+are locked at the AZ level.
+gp2: io will increase if the disk increases.
+root EBS of EC2 gets terminated by default when instances are terminated. (you can disable that behaviour)
+data can be encrypted at rest and in transit by KMS
+
+EFS
+MOUNT 100s of instances accross AZ
+only for Linux instances (POSIX)
+EFS share website files (wordpress)
+higher price than EBS
+can leverage EFS-IA for cost savings 
+data are encrypted at rest using KMS (AES-256)

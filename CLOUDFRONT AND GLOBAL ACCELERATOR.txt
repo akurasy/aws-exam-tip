@@ -1,0 +1,119 @@
+CLOUDFRONT OVERVIEW
+
+CLOUDFRONT ALLOWS USERS TO PUBCLICLY ACCESS THE CONTENT OF OUR S3 BUCKET WITHOUT MAKING THE OBJECTS PUBLIC
+
+content delivey network (CDN)
+improve read performance by cahing content
+it improves user experience
+216 point of present globally (edge location)
+DDoS protection. 
+
+CLOUDFRONT ORIGINS
+S3 : can be used an ingress (uploading files to S3)
+     for distributing files and caching them at edge locations
+     enhanced security with cloudfront origin access control (OAC)
+
+custom origin - HTTP
+- ALB
+- EC2 instance
+- S3 website (must first enabled the bucket as a static website)
+- any HTTP backend you want
+
+CLOUD FRONT VS S3 CROSS REGION REPLICATION
+CLOUDFRONT: 
+Global edge network
+good for static content that must be available all over the owrld
+contents are cached
+
+S3 CRR
+good for dynamic content that keeps changing. in few regions
+no caching
+read only
+files are uploaded in near real time.
+====================================================================
+
+CLOUD FRONT - ALB OR EC2 AS ORIGIN
+our EC2 instance must be public and enabled all SG to allow traffic, because there is no private VPC connection on cloud front.
+
+ALB must be made public as well and the backend ec2 instance can be private.
+
+
+==================================================
+
+CLOUDFRONT GEO-RESTRICTION
+
+you can restrict who can access your distribution
+allowlist: allow users in certain country to access your dstribution
+blocklist: block users in certain country not to have accesss to your distributions.
+
+the country is determined using the Geo-IP data base of the user to match the blocked country.
+
+===============================================
+
+CLOUDFRONT PRICING
+
+CLOUDFRONT edge location are all aroubd the world, but the cost data for each edge location varies.
+you can reduce the number of edge locations for cost reduction
+
+===============================================
+
+CLOUDFRONT CACHE INVALIDATION
+If you update your app at the backend, cloudfront doesnt know about it.
+it only refreshes the updated app after the TTL has expired
+but you want to quickly serve the updated app as quickly as possible, you can do this by;
+bypassing the TTL and perform a cloudfront invalidation
+ you can invalidate all files or a special path. 
+
+
+=================================================
+
+
+AWS GLOBAL ACCELERATOR
+
+AWS GA helps to minimise latency.
+GA uses Anycast-IP, where all servers have the same IP address.
+uses 2 static IP (Antcast-IP) to route traffic to the nearest edge location of the use all around the world.
+good for disaster revocery
+DDoS protection
+
+
+GLOBAL ACCELERATOR VS CLOUD DISTRIBUTION
+
+They both AWS global network and edge location all around the world
+ 
+cloudfront:
+improves perfomance for cache and dynamic contents
+content is served at the edge.
+
+GA:
+Improves performance over a wide range of app using TCP and UDP
+no caching available
+good for non HTTP usage such as gaming, IoT OR voice over IP
+good for great failover
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+iam is used to create users account in an organisation.
+
+users can be added to a group
+group cannot be added to another group
+
+users can belong to multiple groups
+
+IAM PERMISSIONS
+Users or groupsare assigned permission in JSON documents called policies
+
+the policy defines the permission of the users or groups
+
+in AWS you apply the LEAST privilege principle: don't give more permissions than a user needs
+
+group policy === attached to a group
+inline policy === attached to a user
+
+
+SECURING YOUR ACCT
+password security policy to protect your acct
+MFA is a multi-factor authenticator to secure your acct. an hacker might have access to your root acct password but will not be able to login without the MFA.
+
+MFA = password you know + device you own.
+examples
+google authy = phone only
+authy = multi device
+universal 2nd factor (U2F) E.G Yubikey. === this is a hard device and a third part device 
+hardware key Fob MFA for AWS Govcloud (US) === 3rd party
+
+
+
+
+ACCESSING AWS
+using the aws management console providing password and MFA
+using the CLI console using access key and secret key
+aws sdk protected by access key embedded with your application
+
+
+AWS CLOUDSHELL ==== REGION AVAILABILITY
+
+It is not yet available in all regions, and you can find the region list here: https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html
+
+Please switch to one of these regions if you want to do the next (optional) hands-on.
+
+
+CLOUD SHELL is a terminal on AWS cloud. that provides the CLI environment.
+
+
+
+AWS ROLES FOR SERVICES
+The iam roles performs some was services on your behalf. giving certain permissions to your ec2 instance
+some of thge common roles include:
+ EC2 role and LAMBDA role.================================
+
+IAM SECURITY TOOLS
+
+
+IAM Credentials Report  (Account Level) :  A REPORT that lists all your account users and the status of their various credentials.
+
+IAM Access Advisor (User Level): it shows the access granted to a user and when last those services were last accessed.
+you can use this info to revise your policies.
+
+
+IAM GUIDELINES AND BEST PRACTICES
+- Do not use your root account except when setting up your aws account.
+- One Physical user = One AWS user (do not share one single account between two users).
+- assign users to groups and assign permissions to groups
+- create a strong password policy
+- use MFA
+- Create roles for giving permissions to AWS services
+- create access key for programmatic access.
+- AUDIT the pernmission of your account using IAM credential report or IAM access advisor.
+
+
+IAM SUMMARY
+iam users mapped to physical users
+policy: JSON document map out permission for groups and users
+security = MFA + PASSWORD
+AWS CLI: manage your aws services via the command line interface
+AWS SDK: manage your aws services via the programmatic language
+access key: access both AWS CLI and AWS SDK
+audit: iam credentail access for users & credentials, and iam access advisor for access granted to users.

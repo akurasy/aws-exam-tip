@@ -1,0 +1,292 @@
+
+AMAZON RDS OVERVIEW
+RDS = relational data base service.
+it is a managed database for DB that use SQL as a query language.
+it allows you to create DB in the cloud and are managed by AWS
+Amazon RDS supports the following DB:
+Postgres
+MySQL
+MariaDB
+Oracle
+Microsoft SQL Server
+Aurora (AWS proprietary DB)
+
+ADVANTAGE OF USING RDS TO DEPLOY EC2 INSTANCE.
+
+RDS is a managed service:
+	automated provisioning, OS patching
+	continous backup and restore to a specific time stamp (Point in Time Restore)
+	monitory dashboards
+	read replica
+	multi AZ for Disaster recovery
+	scaling capability
+	strorage backed by EBS (gp2 or io1)
+BUT you cant SSH into your instance.
+
+RDS - STORAGE AUTO SCALING.
+RDS helps you to scale your storage automatically
+avoid manual scaling your database storage.
+You have to set a maximum threshold limit.
+helps modify your storage
+useful for applications with unpredicted workloads.
+supports all RDS DB engine.
+
+
+
+
+=====================================================
+
+RDS READ REPLICA VS MULTI AZ
+
+RDS READ REPLCAS for read scalability
+up to 15 read replicas
+with AZ, accross AZ or accross region
+replica is async. so read are always consistent.
+replica can be promoted to their own DB.
+application must update the connection string to leverage read replicas
+
+RDS RR USECASE
+Used for reporting applications. the reporting application connects to the read replica so your main DB connceted to the production application is unaffected
+they are used for SELECT(==read)only  kind of statement.
+
+
+RDS RR NETWORK COST.
+in AWS, there is a nework cost when data goes from one AZ to another.
+for RDS RR within the same region you dont have to pay.
+
+PLS NOTE: You can not create encrypted Read Replicas from an unencrypted RDS DB instance.
+
+
+RDS MULTI AZ (FOR DISASTER RECOVERY)
+sync replication
+one DNS name, automatic app failover to standby.
+increase availability
+failover, incase of loss AZ, network, instance or storage failure.
+no manual interventions in app.
+not used for scaling.
+
+multi-AZ when used does not require you to change the SQL connection string.
+
+NOTE: the read replica can be set up as multi AZ for disaster recovery.
+
+
+RDS FROM SINGLE-AZ TO MULTI-AZ
+it is a zero downtime operation (which means you dont need to stop the DB)
+just click on modify for the DB and selec multi AZ
+
+the following will happen internally:
+snapshot will be taken
+a new DB is restored from the snapshot to another AZ
+Synchronisation is enabled between the two databases
+
+
+=======================================================================
+
+RDS CUSTOM FOR ORACLE AND MYSQL SERVER
+RDS custom is for oracle and MySQL server only.
+RDS custom gives you access to the underlying db and OS so you can:
+	configure settings
+	install patches
+	enable natives features 
+	access the underlying EC2 instance using SSH or SSM session manager.
+
+NOTE: deactivate automation mode to perform your customisation. it is important to take a snapshot since you are accessing the underlying instance
+
+RDS VS RDS CUSTOM
+RDS: fully mamaneged  by AWS.
+RDS CUSTOM: full admin access to the underlying instance and OS.
+
+
+=========================================================================
+
+AMAZON AURORA
+aurora is a proprietory technology from AWS (it is not open source)
+postgres and mysql are both supported as aurora db (that means your driver will work as if aurora was a postgres or myql database)
+aurora is AWS cloud-optimized and claims 5x improved performance over mysql, 3x performance over postgres on RDS. 
+aurora storage automatically grows in increment from 10GB to 128TB
+can have 15 replicas and replication proces is faster than mysql
+failover in aurora is instantaneous. its HA native
+
+AURORA HIGH AVAILABILITY AND READ SCALING.
+6 copies of your data accross 3AZ
+	4 copies out of 6 needed for write
+	3 copies out of 6 needed for read
+	self healing with peer-to-peer replication
+	storage is stripped across 100 volumes
+aurora instance takes write (master)
+1 master + up to 15 read replicas servers read
+the read replica supports cross region replication.
+
+
+AURORA DB CLUSTER
+Writer endpoint is only enabled on the master
+the reader endpoint is conncetd to a load balancer, the replicas are then connected with load balancer connection attached to an ASG.
+
+FEATURES OF AURORA
+automatic failover, backup and recovery, isolation and security, industry compliance, push-button scaling, 
+automated patching with zero-downtime, advance monitoring, routine maintainace, backtrack (restore data at any point of time without using backups)
+
+==================================================
+
+AMAZON AURORA - ADVANCED CONCEPTS
+
+AURORA CUSTOM allows you to use the custom endpoint in place of the reader endpoint
+
+AURORA SERVERLESS allows automated db instantiation, no capacity planning, good for infrequent unpredicted workload, cost-effective (pay per sec)
+
+AURORA MULTI-MASTER used in case you want multi write avilability for the writer node. 
+	every node does R/W, promoting read replica as the new master
+GLOBAL AURORA used for disaster recovery, simple to put in place, (THIS IS RECOMMENDED)
+	1 primary region (read/write), 5 secondary region(read only), 16 read replicas per region and helps to decrease latency
+AURORA MACHINE LEARNING enables you to add ML-based prediction to your applications via SQL
+	simple, optimised and secure integration betwen AURORA and AWS ML services 
+	supported services : AMAZON SageMaker(for any ML model), amazon comprehend (for sentiment analysis) 
+
+=====================================================
+
+RDS AND AURORA: BACKUP AND MONITORING
+
+RDS BACKUP
+automated backup: do a daily backup during backup window. the earliest backup is 5mins, retention of 1-35days
+
+MANUAL DB SNAPSHOT
+manually triggered by users
+retention of backup as long as you want it.
+
+
+AURORA DB CLONING
+it allows you to create a new aurora cluster from an existing one.
+faster than snapshot and restore.
+use copy-on-write protocol
+very fast and cost effective
+useful to create a staging DB from a production DB without impacting the production DB
+
+===============================================================================
+
+RDS AND SECURITY
+AT REST encryption using KMS at launch
+if master is not encrypted, the read replica cannot be encrypted.
+
+IN-TRANSIT encryption use AWS TLS root certificate client-side
+IAM auhtntication
+security groups. to control network access
+no SSH except RDS custom
+audit log can be enabled and send to cloudwatch log for longer retention
+
+============================================================
+
+AMAZON RDS PROXY
+fully managed DB proxy for RDS
+allows app to share and pull DB connections established with the DB
+Improve DB efficiency by reducing the stress on DB resources
+serverless, autoscaling and highly available (multi-AZ)
+reduced RDS and aurora failover time by up 66%
+supports RDS and AURORA DB
+No code changes for most apps
+enforce IAM authentication for DB and securely store credentials in the AWS secret manager.
+it is never publicly accessible. you can only connect via VPC
+
+====================================================================
+
+ELASTIC CACHE OVERVIEW
+the same way RDS is to get managed RDS, 
+ElastiCache is to get managed Redis or MemCache
+Caches are in-memory DB  with high performance and low latency.
+Helps reduce load on DB for read intensive workloads
+helps to make your application stateless.
+AWS takes up OS maintainance
+using ElastciCache requires heavy application code changes
+
+ARCHITECTURE FOR USING ELASTIC CACHE
+Application queries ElasticCache. if not available, gets from RDS and writes into the Cache.
+this architecture helps reduce load in RDS
+Cache must have invalidation strategy to make sure only the most recent data is used in there.
+
+USER SESSION STORE
+when a user hits the application, the user writes into the ElasticCache
+if the user hits another instance of our app, the user receives data that it has already writes in. the cache is like an inbound memory and makes your app stateless.
+
+
+REDIS VS MEMCACHED
+REDIS
+high availability
+data durability using AOF persistency.
+Multi-AZ
+
+MEMCACHED
+No high availability
+multinode for partitioning of data (sharding)
+non persistent
+no backup and restore
+multi-threaded architecture.
+
+
+===============================================================================
+
+ELASTICACHE FOR SOLUTION ARCHITECT
+
+Cache Security:
+supports IAM authentication for REDIS
+IAM policies on ElastiCache are only used for AWS API-Level security
+REDIS auth.
+Memcahed supports SASL-based authentication (advanced)
+
+PATTERNS FOR ELASTICACHE
+
+1. LAZY LOADING: all the read data is cached. data can become stale from caching.
+2. WRITE-THROUGH: Adds or update data written to a cache when written to a DB (no stale data)
+3. SESSION STORE: Store temporarily session data in a cache.(using TTL features)
+
+REDIS USECASE
+gaming leaderboards are computationally complex.
+sorted set guarantee both element ordering and uniqueness.
+each time a new element is added, it is ranked in real-time, then added in real order.
+
+
+List of Ports to be familiar with
+Here's a list of standard ports you should see at least once. You shouldn't remember them (the exam will not test you on that),
+but you should be able to differentiate between an Important (HTTPS - port 443) and a database port (PostgreSQL - port 5432) 
+
+Important ports:
+FTP: 21
+SSH: 22
+SFTP: 22 (same as SSH)
+HTTP: 80
+HTTPS: 443
+
+RDS Databases ports:
+PostgreSQL: 5432
+MySQL: 3306
+Oracle RDS: 1521
+MSSQL Server: 1433
+MariaDB: 3306 (same as MySQL)
+Aurora: 5432 (if PostgreSQL compatible) or 3306 (if MySQL compatible)
+
+Don't stress out on remember those, just read that list once today and once before going into the exam and you should be all set :)
+Remember, you should just be able to differentiate an "Important Port" vs an "RDS database Port".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

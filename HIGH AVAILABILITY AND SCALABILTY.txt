@@ -1,0 +1,162 @@
+
+SCALABILITY means your application/system can handle greater work loads by adapting
+
+TYPES OF SCALABILTIY
+vertical scalability = increasing the size of your instance.
+horizontal scalability = elasticity
+
+scalability is linked but different from high availability
+
+	VERTICAL SCALABILITY
+-	vertical scabilty means increasing the size of your instance.
+-	example:. you have a t2.micro instance and you want to scale it up to t3.large
+	commonly used for data base.
+
+-	RDS and Elasticcache can be scaled vertically by upgrading the underlying instance type.
+-	there is a scaling limit (hardware limit)
+
+
+	HORIZONTAL SCALABILITY
+-	means increasing the number of instance/system for your application
+-	works for distributed system e.g web applications and modern applications
+-	it is easy to scale horizontally. Thanks to amazon EC2 instance.
+
+VERTICAL = SIZE OF INSTANCE (scale up or down)     ===========     HORIZONTAL = NUMBERS (QUANTITY) OF INSTANCE (scale in or out)
+
+
+HIG AVAILABLITY means running your application in at least two data centers (==AZ)
+The role of high availability is to survive data center loss.
+
+
+=================================================================
+
+
+ELASTIC LOAD BALANCER
+
+They are servers that forwward traffic to multiple servers (e.g EC2 instance) downstream.
+
+USECASE
+Spread accross multiple downstream instances, application is exposed to a single point, do regular health checks for your instances,
+enforce stickiness with cookies, high availability accross zones, seperate public traffic from private traffic.
+
+HEALTH CHECK ensures that the instance is healthy to receive and send request.
+
+
+TYPES OF LB
+classic LB = support HTTP,HTTPS,TCP AND SSL (SECURED TP)  CLB-2009
+application LB = supports HTTP,HTTPS,WebSocket  ALB-2016 
+networl LB = supports TCP, TLS, UDP   NWLB-2017
+gateway LB = operates at layer 3 (network layer) - IP protocol  GWLB-2020
+
+LB SECURITY GROUP = 80 AND 443.
+
+
+======================================================================
+
+APPLICATIOB LB
+Load balancing to multiple HTTP apps accross machines (target group)
+redirect traffic from http to https
+routing based on path in url e.g example.com/posts and example.com/users
+route based on hostname in the url e.g one.example.com 
+route based on querry strings and headers e.g example.com/users?id=123&order=false
+good for mirco services and container based application. e.g docker and Amazon ECS
+
+When using an Application Load Balancer to distribute traffic to your EC2 instances, the IP address you'll receive requests from will be the 
+ALB's private IP addresses. To get the client's IP address, ALB adds an additional header called "X-Forwarded-For" contains the client's IP address.
+
+=======================================================
+
+NETWORK LB
+layer4 LB allows you to forward  UDP and TCP traffic to your instance.
+handles millions of request per sec
+least latency
+supports EIP
+supports extreme performance.
+target group = ec2 instances or IP address (private IP) or application LB
+health check supports http,https and tcp protocol
+
+the NLB supports HTTP health checks as well as TCP and HTTPS
+
+===========================================================
+
+GATEWAY LB
+GWLB used to deploy, scale and manage a fleet of 3rd party network virtual appliances in AWS
+example: firewall, intrusion detection, and prevention system. deep packet inspection systems and payload manipulation.
+operates at layer3 (network layer) IP packets.
+use the GENEVE PROTOCOL ON PORT 6081.
+
+============================================
+
+ELASTIC LOAD BALANCER SSL AND TLS CERTIFICATE
+
+SSL certificate allows traffic between users and load balancers to be encrypted in transit. (in-flight encryption)
+SSL = secure socket layer.
+
+TLS is transport layer security which is a newer version.
+
+SSL certificates have expiry date that you set and must be renewed.
+
+SSL -SNI (SERVER NAME INDICATION)
+SNI solves the problem of loading multiple SSL certificate into one web server
+it is a newer protocol and allows the client to indicate their hostname of the target server in the initial SSL handshake.
+
+NOTE: only works for ALB AND NLB
+
+===============================================
+
+ELB connection draining
+
+for CLB it is called connection draining
+for ALB or NLB it is called deregistration delay
+
+when there is an unhealthy check. it stops sending request to the ec2. de-registering it.
+
+======================================================
+
+AUTOSCALING GROUP
+ASG creates and get rid of server very quickly. used for scale out and scale in.
+ASG ensures we have minimum and maximum numbers of instances running.
+ASG creates a new instance if an instance is terminated.
+ASG are free
+it is possible to scale ASG based on cloudwatch alarms.
+an alarm monitors a metric.
+=============================================
+
+ASG SCALING POLICY
+TARGET TRACKING SCALING; most simple and easy to use , you can set your maximum CPU capacity
+SIMPLE / STEP SCALING: when a cloud watch alarm is triggered, then add 2 units 
+SCHEDULED ACTION: anticipate a scaling based on known usage pattern. example; increase from 5 to 10 at every 5pm on Fridays.
+
+
+
+PREDICTIVE SCALING = forecast based on historical scaling in the past
+ASG COOLING DOWN PERIOD
+it allows instances to cool down after scaling. it will not scale during this period to allow for metrics stabilization.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+

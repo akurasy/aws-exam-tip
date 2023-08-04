@@ -1,0 +1,151 @@
+AWS SNOW FAMILY OVERVIEW
+
+snow family are offline families that allows you to perform data migration.
+
+highly secured portable devices for collecting and processing the edge and migrate data in and out of AWS
+
+DATA MIGRATION: snowcone, snowball edge and snow mobile
+EDGING: snowcone and sonwball edge.
+
+NOTE: IF TAKES MORE THAN ONE WEEK TO TRANSFER OVER A NETWORK, USE SNOWBALL.
+
+SNOWBALL
+snowball edge compute optimised = 42TB of SSD
+snowball edge storage optimised = 80 TB of HDD
+
+SNOWCONE
+used instead of snowball in a space constraint environment. where snowball size doesnt fit.
+14TB SSD and 8TB HDD
+
+SNOWMOBILE
+Can transfer exabytes of data up to 1,000,000TB
+Better than snowball if you are sending 10PB of data.
+
+AWS OPsHUB: A software you can install on your computer to manage your snow family device.
+
+
+===========================================================
+
+SNOWBALL INTO GLACIER
+snowball cannot import data directly into glacier. the first thing is to import fisrt to S3
+S3 the import to glacier using Lifecycle policy.
+
+=====================================================
+
+AMAZON FSx 
+to launch a third party file system on AWS
+
+types
+lustre , windows file server, NetApp ONTAP, OpenZFS
+
+FSx for windows
+supports SMB protocol
+can be mounted on linux instances
+supports microsoft distributed file system (DFS) namespace
+data is backed up daily to AWS
+
+FSx for lustre
+parallel distributed file system for large-scale computing
+used for ML, HPC, video processing, financial modelling.
+
+
+FSx for NetApp ONTAP
+manage NetApp ONTAP on AWS
+compactible with NFS, SMB and iSCSI protocol
+works with different OS. linux, windows, MacOS, Vmware Cloud, amazon EC2 and EKS
+point in time instantaneous cloning.
+
+
+FSx for OpenZFS
+only comtactible with NFS protocol.
+to move workload running on ZFS to AWS.
+works with different OS. linux, windows, MacOS, Vmware Cloud, amazon EC2 and EKS
+snapshot compression and low cost.
+
+=======================================================
+
+STORAGE GATEWAY
+
+The bridge between your AWS S3 and on-premise data is refferred to as STORAGE GATEWAY.
+
+Works in HYBRID environment.
+
+uses: disaster recovery, backup and restore, tier storage, onpremise cache for AWS data
+
+TYPES:
+S3 file gateway
+FSx gateway
+Tape gateway
+Volume gateway
+
+=======================================================
+
+AWS TRANSFER FAMILY
+fully-managed service for file transfer in and out of amazon S3 or amazon EFS using FTP protocol.
+
+=======================================
+
+AWS DATA SYNC
+Move data in and out fro  on-premise or other cloud to AWS cloud. this is done using an agent. 
+
+AWS to AWS= no agent needed
+
+can synchronise to :
+S3, EFS AND FSx
+
+file permissions and metadata are preserved.
+
+===========================================
+
+STORAGE COMPARISON
+
+S3 = object storage
+S3 Glacier= object archival
+EBS Volume= network storage for an EC2 instance
+Instance storage= physical storage for your EC2 intsance
+EFS= network file system for Linux instances, POSIX filesystem.
+FSx for windows= network file system for windows server
+FSx for luster = high computing performance for linux filesystem
+FSx for NetApp ONTAP= High OS compactibility
+FSx for OpenZFS= managed ZFS filesystem
+Storage gateway= bridge between onpremise and clouD
+Transfer family= FTP, FTPS, SFTP interface on amazon s3 or amazon EFS.
+Datasync= schedule data sync from on-premise to AWS.
+Snowcone/snowball/snowmobile= use in transfering large amount of data to the cloud physically
+Database= for specific workloads, usually with indexing and querying 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,123 @@
+
+S3 ENCRYPTION.
+You can encrypt object in S3 using one of the following methods
+
+1. SERVER-SIDE ENCRYPTION. (SSE)
+	different flavours of SSE: AMAZON S3 - MANAGED  Keys (SSE-S3 enabled by default)
+	SSE with KMS key stored in AWS KMS (SSE-KMS), MANAGED BY USERS BUT HAS KMS LIMITATIONS
+	SSE with customer provided key (SSE-C). managed outside of AWS and discarded when used.
+
+2. CLIENT-SIDE ENCRYPTION 
+	use client library
+	the client must encrypt data themselves before uploading to S3.
+	client must decrypt data themselves when retieving from S3. decryption and encryption is done outside amazon S3
+
+	customer fully manage keys and encryption cycle
+
+3. ENCRYPTION IN TRANSIT (SSL/TSL)
+	Encryption in flight is also called SSL or TLS
+	amazon as two endpoints. (1) HTTP; not encrypted (2) HTTPS; encrypted in flight.
+
+forcing encryption in transit
+
+=================================================
+
+DEFAULT ENCRYPTION VS BUCKET POLICIES
+By default AWS automatically uses SSE-S3 when object is being created.
+you can force encryption using bucket policies. you can deny any API call to put an object with encryption header (from SSE-KMS OR SSE-C)
+you can use bucket policy to deny the automatic encryption and set your own encryption pattern.
+
+NOTE: BUCKET POLICIES ARE EVALUATED BEFORE DEFAULT ENCRYPTION
+
+=====================================================
+
+S3 CORS
+Cross-Origin Resource Sharing
+CORS is a web browser based mechanism that allow requests to other origins while visiting the main origin.
+
+IF A CLIENT MAKES A CROSS-REGION REQUEST ON OUR S3 BUCKET, THEN WE NEED TO ENABLE THE CORRECT CORS HEADER
+
+THIS IS A VERY POPULAR EXAM QUESTION. 
+
+================================================
+
+AWS MFA DELETE
+MFA forces user to generate a code from a third party application which provides access to S3 console. 
+
+MFA will be required to permanently delete object, delete versioning.  these processes are both destructive.
+
+MFA wont be required to enable versioning, list deleted versions
+
+to use MFA, versioning must be enabled. only the bucket owner (root account) can enable/disable MFA.
+
+======================================================
+
+S3 ACCESS LOG
+
+for audit purposes, you may want to log all the access to S3 bucket
+for any request made to S3
+it is region specific.
+do not use your monitored bucket as logging bucket.
+
+==============================================
+
+S3 PRE SIGNED URL
+
+this is to generate a temporary url to give access to certain object in a bucket
+the pre-signed url inherits the permissions of the user that generated the url. but a time limit (url expiration) can be applied
+
+===============================
+
+S3 GLACIER VAULT LOCK.
+The idea is to adopt a WORM (write once read many) model.
+create a vault lock policy
+lock the policy for future edit.
+helpful for compliance and data retention
+
+S3 OBJECT LOCK (VERSIONING MUST BE ENABLED)
+adopt a worm model
+block object version deletion for a specific period of time.
+
+
+===================================
+
+S3 ACCESS POINT.
+
+Access point defines various ways to have access to our S3 bucket. 
+we can create certain permission level for certain users by defining an access point for them.
+Each access point has its own dns name
+they can be privately accessible via VPC USING vpc endpoint
+
+
+
+============================================
+
+S3 OBJECT LAMBDA
+it invokes a lambda function to retain a redacted object from an application.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

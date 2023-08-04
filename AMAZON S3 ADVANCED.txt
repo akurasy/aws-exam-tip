@@ -1,0 +1,83 @@
+AMAZON S3 MOVING BETWEEN STORAGE CLASSES
+
+Object can be transition between storage classes.
+
+AMAZON S3 LIFECYCLE RULES
+transition action: configure objects to transition to another class.
+	move object from IA after 60days from creation to GLACIER.
+	move to deep glacier after archiving for 6months.
+
+expiration: configure object to expire (deletion after a certain period), to delete old version if versioning is enabled
+
+
+S3 analytics
+help you decide when to transition object to the right storage class. 
+recommended for standard and IA. doesn't work for one-zone IA or glacier.
+report is updated daily
+24 to 48hours to start seeing analysis.
+
+================================================================
+
+S3 REQUESTER PAY
+In general, S3 obejct and bucket owner pays for storage and data transfer accross the internet
+with REQUESTER PAY OPTION,the requester pays for the data request and object download from the bucket.
+the requester must be authenticated in AWS.
+
+===================================================
+
+
+AWS S3 NOTIFICATION EVENTS.
+USECASE : generate thumbnail of images uploaded to S3.
+you can create as many S3 events as desired.
+events will be sent to the following topics, SNS, SQS, AND LAMBDA FUNCTION. OR AMAZON EVENTBRIDGE
+
+S3 EVENTS- IAM PERMISSIONS.
+
+WE NEED TO CREATE A POLICY ON SNS, SQS AND LAMBDA TO GIVE S3 PERMISSION TO SEND AN EVENT TO THEM.
+
+
+======================================================
+
+
+S3 BASELINE PERFORMANCE
+
+S3 scales to hight request rate. latency 100-200 ms
+your application can achieve at least 3500 put/copy/delete/post or 5500 get/head requests per second per prefix in a bucket.
+
+MULTI-PART UPLOAD
+recommended for files above 100mb and must be used for file that are over 5GB.
+can help parallelize upload (speed up upload process)
+
+
+S3 TRANSFER ACCELERATION.
+Increase transfer speed by transferring the file to AWS edge location which will forward the file to S3 bucket in the target region.
+
+compactible with multipart upload
+
+
+===========================================================
+
+S3 SELECT AND GLACIER SELECT
+retrieve less data using SQL by performing server-side filtering.
+less network transfer, less CPU cost client-side
+
+============================================ 
+
+S3 BATCH OPERATIIONS
+Allows you to perform bulk operation on S3 objects with a single request. example;
+modify object metadata, encrypt all unencrypted s3 object, invoke Lambda function to perform custom action on each object.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

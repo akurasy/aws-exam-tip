@@ -1,0 +1,111 @@
+
+OVERVIEW
+the solutions architect are the best part of this course
+lets understand how the techniologies we have seen work together
+
+we will look at some sample case studies:
+WhatIsTheTime.com
+MyClothes.com
+MyWordPress.com
+Instantiating applications quickly
+Beanstalk
+
+===========================================================
+
+WhatIsTheTime.com
+• WhatIsTheTime.com allows people to know what time it is
+• We don’t need a database
+• We want to start small and can accept downtime
+• We want to fully scale vertically and horizontally, no downtime
+• Let’s go through the Solutions Architect journey for this app
+• Let’s see how we can proceed!
+
+minimum instance = reserved capacity = save costs
+
+5 PILLARS OF WELL ARCHITECTURED APPLICATION
+-	cost
+-	performance
+-	reliability
+-	security
+-	operational excellence
+
+NNEMONICS (CROPS)
+
+======================================================
+
+MyClothes.com
+
+
+introducing stickiness (session affinity)
+elasticcache
+RDS
+
+=======================================
+
+WordPress.com
+attaching EFS connectinng multiple instance storage together using ENI.
+
+
+==================================
+
+Instantiating applications quickly
+Golden AMI.he AMI containing the application can be used to launch other instance
+bootstrap using userdata script.
+
+===============================================
+
+ELASTIC BEANSTALK
+
+Elastic Beanstalk – Overview
+• Elastic Beanstalk is a developer centric view of deploying an application on AWS
+• It uses all the component’s we’ve seen before: EC2, ASG, ELB, RDS, … 
+• Managed service
+• Automatically handles capacity provisioning, load balancing, scaling, application health monitoring, instance configuration, …
+• Just the application code is the responsibility of the developer
+• We still have full control over the configuration
+• Beanstalk is free but you pay for the underlying instances
+
+
+Elastic Beanstalk – Components
+• Application: collection of Elastic Beanstalk components (environments, versions, configurations, …)
+• Application Version: an iteration of your application code
+• Environment
+• Collection of AWS resources running an application version (only one application version at a time)
+• Tiers: Web Server Environment Tier & Worker Environment Tier
+• You can create multiple environments (dev, test, prod, …)
+
+
+Elastic Beanstalk – Supported Platforms
+• Go
+• Java SE
+• Java with Tomcat
+• .NET Core on Linux
+• .NET on Windows Server 
+• Node.js
+• PHP
+• Python
+• Ruby
+• Packer Builder
+• Single Container Docker
+• Multi-container Docker
+• Preconfigured Docker
+• If not supported, you can write your custom platform (advanced)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
