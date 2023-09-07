@@ -1,0 +1,265 @@
+EXAM TIPS 
+
+
+-cloudwatch metrics helps you send RDS autoscaling status to kinesis data firehose. 
+
+-cloud front anf lambda@edge function has the capacity of holding multiple version of an object at an edge location to deliver different versions to customers
+
+-amazon kinesis data firehose has th ability of processing data in real-time or near real-time. 
+It can convert incoming data to Apache Parquet format before storing it in Amazon S3, which meets the company's requirement of storing data in Parquet format.
+
+-Amazon Kinesis Data Analytics is the easiest way to analyze streaming data in real time, extract actionable insights, and respond to your business and 
+customer needs promptly.
+
+-for cost efficiency, always reduce the number of instances in the development environment to one to avoid operational overhead and cost.
+
+-The I3 instances are high I/O instances that are designed for very high random I/O performance.
+These instances could help in improving the streaming application's performance during peak times.
+
+-The CloudWatch agent is a powerful tool for monitoring AWS environments. By deploying the CloudWatch agent to EC2 instances, 
+the company can generate custom metrics specifically tailored to their application. this also helps in future capacity planning.
+
+- VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC
+VPC flow logs can send data to cloudwatch logs for cloudwatch metrics. 
+An Amazon CloudWatch Alarm can be set up based on the metric created by the filter. 
+This alarm can be configured to transition to the ALARM state when certain conditions (like detecting a connection to a risky IP) are met.
+
+
+- Amazon Elastic File System (EFS) provides a simple, scalable, fully managed elastic NFS file system for use with AWS Cloud services and on-premises resources. 
+It's designed to provide massively parallel shared access to thousands of Amazon EC2 instances, enabling applications to achieve high levels of aggregate throughput
+and IOPS with consistent low latencies. 
+As EFS uses the NFS protocol, it can be used by NFS clients, satisfying the organization's requirement for a fully managed solution with NFS client capability.
+
+- A NAT gateway enables instances in a private subnet to connect to the internet but prevents the internet from initiating a connection with those instances
+
+- A multivalue answer routing policy in Amazon Route 53 is used to route traffic approximately randomly to multiple resources, such as EC2 instance
+The Multivalue Answer Routing Policy lets you have Route 53 respond to DNS queries with up to eight healthy records selected at random.
+it returns all the IP addresses of healthy instances when a DNS query is made.
+
+- VPC peering allows for private, secure communication between two VPCs
+
+- IAM (Identity and Access Management) roles are a secure way to grant permissions to entities that you trust, such as AWS services, 
+applications running on EC2, or even users in another AWS account. Roles avoid the need to share and manage long-term credentials, thus enhancing security.
+
+- when launching an instance during the add storage option, uncheck the delete on termination or set it to NO , to avoid volume deletion when an instance is terminated.
+
+- Amazon Aurora is a MySQL and PostgreSQL-compatible relational database built for the cloud that combines the performance and availability of traditional enterprise 
+databases with the simplicity and cost-effectiveness of open source databases.
+It provides superior fault tolerance by spreading replicas across multiple Availability Zones, which can greatly enhance the availability of the platform.
+
+- AWS Config enables you to assess, audit, and evaluate the configurations of your AWS resources. 
+It continuously monitors and records your AWS resource configurations. With Config, you can review changes in configurations and relationships between AWS resources, 
+dive into detailed resource configuration histories, and determine your overall compliance against the configurations specified in your internal guidelines.
+
+- Amazon RDS Proxy is a fully managed, highly available database proxy for Amazon Relational Database Service (RDS) that makes applications more scalable,
+ more resilient to database failures, and more secure. It allows applications to pool and share database connections,
+ reducing the overhead of establishing new connections and relieving the pressure on the database, which can significantly improve application scalability and latency.
+
+- ALB  conducts health checks on these instances and only routes traffic to healthy ones. 
+Therefore, if you create an ALB with a health check in front of the EC2 instances and configure Amazon Route 53 to route traffic to the ALB, 
+it ensures that users are routed only to healthy instances, eliminating the access failures
+
+- When NAT instances that are not able to support the application's traffic requirements. The solutions architect needs to provision a NAT gateway
+ that ensures high availability, fault tolerance, and automatic scalability.
+
+- when a dynamodb has lower efficiency, increasing the provisioned throughput on the new global secondary index (GSI) might improve performance.
+ it's recommended to complete any large-scale operations before adding a GSI to prevent further performance degradation during its creation.
+
+-  AWS Elastic Beanstalk simplifies the deployment and scaling of applications.
+Amazon S3 should be used for storing and delivering videos. Amazon S3 is a scalable object storage service designed for storing and retrieving data from anywhere
+on the web.
+
+- Web Application Firewall (AWS WAF) is a powerful service that protects web applications against common web threats such as SQL injection and cross-site scripting.
+
+-  AWS Glue is a fully managed extract, transform, and load (ETL) service that makes it easy to move data between data stores.
+ It can catalog data from various sources and formats, transform it, and load it into S3.
+
+Amazon API Gateway is an AWS service for creating, deploying, and managing APIs. It can handle any volume of incoming data
+and can effectively channel this raw data to an Amazon Kinesis data stream. Kinesis Data Streams can collect and process large streams of data records in real-time
+and store to S3. the data is picked from S3 by aws glue for analytic purpose.
+
+- AWS Secrets Manager protects access to applications, services, and IT resources. This service enables you to easily rotate, manage, and retrieve database credentials, 
+API keys, and other secrets throughout their lifecycle.
+
+- AWS Backup is a fully managed backup service that makes it easy to centralize and automate the back up of data across AWS services. AWS Backup provides the 
+ability to create backup plans that automate the backup scheduling, lifecycle management, and backup retention. the backup can have an exptration period
+due to the organization's retention policy.
+
+- Amazon RDS does not support enabling encryption for an existing DB instance directly. However, you can create a snapshot of your existing database,
+ which is an exact copy of the database at the time the snapshot was taken. Then you can create a copy of this snapshot but this time,
+ you will have the option to enable encryption. The process is simple, you select the snapshot you created, copy it, 
+and then choose an encryption key while creating the copy.
+
+
+- AWS Storage Gateway is a hybrid cloud storage service that enables your on-premises applications to seamlessly use AWS cloud storage. 
+It offers file-based, volume-based, and tape-based storage solutions.
+
+- KMS is to encrypt EBS volume and data at rest. AWS certificate manager (ACM) is to encrypt data in transit.
+AWS Certificate Manager (ACM) can handle the complexity of creating, storing, and renewing public and private SSL/TLS X.509 certificates 
+that can be used for secure network communications and to establish the identity of websites over the Internet.
+By attaching an ACM certificate to the Application Load Balancer (ALB), all data in transit between the ALB and the clients will be encrypted
+
+- AWS Global Accelerator improves the availability and performance of your applications by using the AWS global network. 
+It provides static IP addresses that act as a fixed entry point to your applications and routes user traffic to the optimal AWS endpoint 
+based on several factors like geographic proximity, health of the endpoint, and user-configurable routing policies accross multiple regions.
+
+
+- Amazon ECS is a highly scalable and high-performance container orchestration service that supports Docker containers.
+ It allows you to run and manage your Docker containerized applications without having to install and operate your own container orchestration software
+ or manage the underlying infrastructure. 
+Amazon ECS on AWS Fargate removes the need to provision and manage servers and lets you specify and pay for resources per application,
+ which is great for a company looking to focus on the application rather than the infrastructure. By specifying a minimum of 2 tasks, 
+the application can enjoy high availability and fault tolerance, important characteristics for any complex web application.
+
+
+- global accelerator is good for a blue-green deployment to release various versions of an application.
+
+- API Gateway REST API  makes it easy for developers to create, deploy, secure, and manage APIs that expose HTTP endpoints to clients. 
+It also supports IAM authentication.
+
+- AWS Lambda is a serverless compute service that lets you run your code without provisioning or managing servers.
+ It executes your code only when needed and scales automatically, from a few requests per day to thousands per second. 
+This makes it incredibly useful for workloads that are sporadic or unpredictable. it is also cost-effective.
+
+- configuring S3 life cycle policy to delete the previous and current version of an object deletes the object completely.
+
+- enabling default encryption settings on the S3 bucket ensures that all new objects added to the bucket will automatically be encrypted. 
+For existing objects, AWS offers a feature called S3 Inventory, which can create a list (.csv file) of all objects in the bucket, 
+including their encryption status. This is a simple, automated way to identify all unencrypted objects without needing to manually search through the bucket.
+
+Next, to encrypt these existing unencrypted objects, the best tool is S3 Batch Operations. 
+This feature allows you to perform large-scale operations on S3 objects, such as copying, 
+which in this case can be used to apply encryption. By using the copy command with encryption settings, 
+you can effectively apply encryption to all identified unencrypted objects.
+
+- When you use Amazon RDS Read Replicas, you are charged for data transfer from the primary RDS instance to the read replica. 
+If the read replica is in a different region than the primary instance (cross-region replication), then you will incur data transfer costs. 
+These costs are based on the amount of data transferred out of the source AWS Region. PLS NOTE THIS IS A REGION BASED CHARGES.
+
+- plls note vpc peering does not have associated SG.
+
+- ACTIVE DIRECTORY DOMAIN SERVICE eliminates the creation of IAM users when linked with amazon FXx luster for windows. memebers or groups who have inherited certain
+permissions from  the ADDS for a file can access the file shared when the file is joined with the ADDS.
+
+- AWS WAF (Web Application Firewall) protects web applications from common web exploits and attacks. It allows you to define customizable rules to filter 
+and monitor incoming web traffic. AWS WAF can be integrated with Amazon CloudFront or Application Load Balancer, providing real-time 
+protection against malicious requests, such as SQL injection, cross-site scripting, and distributed denial-of-service (DDoS) attacks
+AWS WAF PREVENTS AGAINST CROSS SITE-SCRIPTING ATTACK (XSS)
+
+- AWS Budgets gives you the ability to set custom cost and usage budgets that alert you when your costs or usage exceed (or are forecasted to exceed) your budgeted amount
+Cost Explorer cannot trigger alerts or notifications when a threshold is crossed. It's used for visualizing, understanding, and managing AWS costs and usage over time,
+but doesn't have an in-built alerting capability.
+
+- PARTITION PLACEMENT GROUPS suitable for distributed and replicated workloads, such as Hadoop, Cassandra, and Kafka.
+
+A cluster placement group is designed to provide low-latency network performance necessary for tightly-coupled node-to-node communication, 
+typical of HPC applications. They do not offer the high availability required in this scenario as all instances are created in a single Availability Zone.
+
+Spread placement groups are designed to help reduce the risk of simultaneous failures that might occur when instances share the same racks. 
+They are suitable for a small number of critical instances that should be kept separate from each other.
+They do not meet the requirement here as they only allow a maximum of seven instances per Availability Zone.
+
+- AWS SCT simplifies heterogeneous database migrations by automatically converting the source database schema to match that of the target database. 
+SCT also converts a majority of the custom code, including views, stored procedures, and functions, to match the target database.
+aws DMS helps to move the date quickly and securely.
+
+-  Amazon Kinesis Data Firehose can capture, transform, and load streaming data into data lakes, data stores, and analytics tools. 
+It can handle streaming data in real-time
+Amazon Redshift is a fully managed, petabyte-scale data warehouse service that makes it simple and cost-effective to analyze all data using SQL. 
+This configuration also provides excellent scalability as the data store grows in size.
+
+- AWS Snowball Edge devices are physical appliances that AWS ships to your location, and they allow you to transfer large amounts of data 
+from your local data center to the AWS cloud. The devices have high storage capacity, which means you can move a huge volume of data, 
+such as the 500 TB in your scenario, without relying on your internet connection.
+
+- AWS Resource Groups helps you organize your AWS resources based on criteria that you define. Specifically, AWS Resource Groups 
+and Tag Editor provide a unified view of AWS resources from different AWS services, which can be categorized and managed according to the tags that you assign to them.
+
+
+- PLS NOTE, WHEN PERFORMING A HEAVY READ AND WRITE OPERATION ON DYNAMODB DATABASE, CREATING A READ REPLICA WILL NOT INCREASE THE THROUGHPUT OF THE OPERATION.
+ATTACHING THE DYNAMODB TO AN AUTOSCALING GROUP WILL INCREASE THE EFFICIENCY OF THE ARCHITECTURE TO HANDLE THE READ AND WRITE REQUESTS.
+
+- when you see an exam question requesting for a solution to route traffic to an healthy instance. rule out all the options that does not include a listner or a 
+listening port to riute traffic traffic to the healthy instance(s)
+
+
+- Clustered placement - same AZ, instances are similar type. used for high network performance of instances in close promiximity
+- partition placement - different AZ . instances can be different types. used for high availability 
+- spread placement - instances different partitions. instances can be different. used for fault tolerance.
+
+IF THE PROBLEM IS PERFORMANCE (NETWORK CONNECTIVITY), USE CLUSTER.
+IF THE PROBLEM IS AVAILABILITY, USE PARTITION
+IF THE PROBLEM IS FAULT TOLERANCE, USE SPREAD
+
+- AWS global accelerator has the capacity of version caching.
+- AURORA = autoscaling capacity
+- MYSQL = no inbuilt autoscaling capacity. scaling is done manually which requires operational overhead if scaling is important.
+
+AT ALL TIMES, READ REPLICA INCREASES AVAILABILITY AND REDUCE OPERATIONAL OVERHEAD
+
+- Kinesis Data Streams is designed for scenarios where you need to collect, process, and analyze real-time streaming data with high levels of customization and control.
+ It's well-suited for building custom streaming data applications.
+
+- Kinesis Data Firehose is designed for simplified and fully managed data streaming scenarios where you want to load streaming data into AWS services or 
+other storage destinations without the need for custom coding or complex processing.
+
+
+- DAX is particularly useful for applications that require low-latency and high-throughput access to DynamoDB data, such as real-time analytics, gaming leaderboards, 
+and high-volume web applications. By reducing the load on your DynamoDB tables and accelerating read operations, DAX can enhance the overall
+ performance and responsiveness of your applications while still benefiting from the reliability and scalability of DynamoDB as the underlying database.
+
+
+
+- AWS Fargate is a serverless compute engine provided by Amazon Web Services (AWS) for running containers. 
+It simplifies the management of containerized applications by removing the need to provision and manage the underlying infrastructure, 
+such as EC2 instances or clusters. With AWS Fargate, you can focus on your containerized application and its resources without concerning yourself with the
+infrastructure.
+
+
+- Amazon S3 can send event notification messages to the following destinations.
+	Amazon Simple Notification Service (Amazon SNS) topics.
+	Amazon Simple Queue Service (Amazon SQS) queues.
+	AWS Lambda.
+	Amazon EventBridge.
+
+- S3 CROSS-REGION REPLICATION is primarily for backup and recovery and not for availability. 
+
+- AWS Transit Gateway acts as a network transit hub that allows you to connect multiple Amazon VPCs and on-premises networks using a single gateway. 
+By Using AWS Direct Connect Gateway, you can establish a dedicated, private connection from your on-premises data center to AWS, 
+enhancing bandwidth throughput and providing a more consistent network experience.
+
+EXAM TIP: WHEN YOU SEE MULTIPLE VPC CONNECTION WITH ON-PREMISE, CHOOSE TRANSIT GATEWAY.
+
+- Amazon data lifecycle manager (DLM) allows you to create lifecycle policies to automate operations related to EBS snapshots such as creation, retention, and deletion
+
+- AWS OpsWorks is a configuration management service that uses Chef or Puppet configuration management.
+
+- VPC sharing allows multiple AWS accounts to share a single Virtual Private Cloud (VPC). Instead of creating multiple VPCs for each account, organizations can use
+ VPC sharing to efficiently consolidate their network infrastructure, simplify management, and reduce overhead
+
+
+-AWS Security Token Service (STS): This service can be very useful in situations where you want to grant temporary access to your resources without creating a 
+long-term IAM user for that purpose. These temporary security credentials have a limited lifespan, so you do not need to rotate them manually or worry about
+ them leading to a long-term security risk.
+
+
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
