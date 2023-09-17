@@ -62,7 +62,7 @@ casandra, HDFS, HBase, Kafka
 
 
 ELASTIC NETWORK INTERFACE
-Logical components in a VPC  that represents a virtual network card. they are what gives EC2 instances access to the nework.
+Logical components in a VPC  that represents a virtual network card. they are what gives EC2 instances access to the network.
 they are used outside EC2 instances as well.
 
 ENI IS USED TO REDUCE NETWORK FAILOVER.
