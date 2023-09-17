@@ -1,4 +1,4 @@
-iam is used to create users account in an organisation.
+6iam is used to create users account in an organisation.
 
 users can be added to a group
 group cannot be added to another group
@@ -48,8 +48,8 @@ CLOUD SHELL is a terminal on AWS cloud. that provides the CLI environment.
 
 
 AWS ROLES FOR SERVICES
-The iam roles performs some was services on your behalf. giving certain permissions to your ec2 instance
-some of thge common roles include:
+The iam roles performs some services on your behalf. giving certain permissions to your ec2 instance
+some of the common roles include:
  EC2 role and LAMBDA role.================================
 
 IAM SECURITY TOOLS
